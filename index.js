@@ -22,7 +22,7 @@ db.on("error", () => {
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
-  "https://billybotfrontend.vercel.app",
+  "https://cyberbullying-frontend.vercel.app/","https://cyberbullying-adminfrontend.vercel.app/"
 ];
 
 app.use(
