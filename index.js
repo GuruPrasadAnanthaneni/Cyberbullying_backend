@@ -11,6 +11,7 @@ mongoose.connect(
   "mongodb+srv://guru:guru@cluster0.oowiasj.mongodb.net/CyberBullying"
 );
 const db = mongoose.connection;
+
 db.on("open", () => {
   console.log("Database Connected");
 });
@@ -18,31 +19,17 @@ db.on("error", () => {
   console.log("Database not Connected");
 });
 
-// Middleware
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "https://cyberbullying-frontend.vercel.app/","https://cyberbullying-adminfrontend.vercel.app/"
-];
-
+// Middleware - Allow CORS for all origins
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (e.g., mobile apps, Postman)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST", "PATCH", "DELETE"], // Allowed request methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
   })
 );
+
 app.use(express.json());
-app.options("*", cors()); // Handle preflight requests
+app.options("*", cors()); // Handle preflight requests globally
 
 // Routes
 app.use("/Signup-Login", SL);
